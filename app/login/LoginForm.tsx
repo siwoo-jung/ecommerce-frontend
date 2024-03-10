@@ -18,17 +18,21 @@ const LoginForm = () => {
       password,
     };
 
+    // const response = await fetch(
+    //   "https://5yywz38qkd.execute-api.ap-southeast-2.amazonaws.com/dev/users",
+    //   {
+    //     method: "GET",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(ticket),
+    //   }
+    // );
+
     const response = await fetch(
-      "https://5yywz38qkd.execute-api.ap-southeast-2.amazonaws.com/dev/users",
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(ticket),
-      }
+      "https://5yywz38qkd.execute-api.ap-southeast-2.amazonaws.com/dev/users"
     );
 
     if (response.status === 200) {
-      console.log(response);
+      console.log(response.body);
     }
     // Handle response if necessary
     // const data = await response.json();
