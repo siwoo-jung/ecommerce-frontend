@@ -28,16 +28,15 @@ const LoginForm = () => {
     // );
 
     const response = await fetch(
-      "https://5yywz38qkd.execute-api.ap-southeast-2.amazonaws.com/dev/users",
+      "https://yitdqdh2rdhtaoof3x5tuomusm0tgjvw.lambda-url.ap-southeast-2.on.aws/",
       {
         method: "GET",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       }
     );
 
-    if (response.status === 200) {
-      console.log;
-    }
+    alert(response.body);
+
     // Handle response if necessary
     // const data = await response.json();
     // ...
