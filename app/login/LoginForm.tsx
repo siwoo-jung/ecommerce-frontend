@@ -35,7 +35,14 @@ const LoginForm = () => {
       }
     );
 
-    alert(response.body);
+    if (!response.ok) {
+      throw new Error("Error");
+    }
+
+    const msg = await response.json();
+
+    alert(JSON.parse(msg.body));
+    console.log(JSON.parse(msg.body));
 
     // Handle response if necessary
     // const data = await response.json();
