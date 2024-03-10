@@ -28,7 +28,7 @@ const LoginForm = () => {
     // );
 
     const response = await fetch(
-      "https://yitdqdh2rdhtaoof3x5tuomusm0tgjvw.lambda-url.ap-southeast-2.on.aws/",
+      "https://5yywz38qkd.execute-api.ap-southeast-2.amazonaws.com/dev/users",
       {
         method: "GET",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
