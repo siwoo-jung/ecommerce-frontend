@@ -28,11 +28,15 @@ const LoginForm = () => {
     // );
 
     const response = await fetch(
-      "https://5yywz38qkd.execute-api.ap-southeast-2.amazonaws.com/dev/users"
+      "https://5yywz38qkd.execute-api.ap-southeast-2.amazonaws.com/dev/users",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      }
     );
 
     if (response.status === 200) {
-      console.log(response.body);
+      console.log;
     }
     // Handle response if necessary
     // const data = await response.json();
