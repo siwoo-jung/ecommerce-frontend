@@ -35,9 +35,7 @@ export default function Page() {
     address,
   };
 
-  const authURI: any = isMember
-    ? process.env.NEXT_PUBLIC_LOGIN
-    : process.env.NEXT_PUBLIC_SIGNUP;
+  const authURI: any = isMember ? process.env.LOGIN : process.env.SIGNUP;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
