@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 
-import Navbar from "./components/Navbar";
+import Navbar from "../components/Navbar";
 
 export const metadata = {
   title: "Welcome to Siwoo's",
@@ -17,6 +17,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <Navbar />
       </body>
     </html>
   );
