@@ -50,6 +50,7 @@ export default function Page() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userInfo),
+        credentials: "include",
       });
 
       if (!response.ok) {
