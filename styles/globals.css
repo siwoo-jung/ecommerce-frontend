@@ -4,31 +4,16 @@
 
 @layer components {
     .btn_auth {
-      @apply group-invalid:pointer-events-none rounded-lg group-invalid:bg-opacity-50 bg-blue-500 px-4 py-2 text-white font-bold hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-800
+      @apply group-invalid:pointer-events-none rounded-lg group-invalid:bg-opacity-50 bg-blue-700 px-4 py-2 text-white font-bold focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-800
     }
+
+    .gray_gradient {
+      @apply bg-gradient-to-r from-blue-900 to-white bg-clip-text text-transparent
+    }
+
+    .profile_navigator {
+      @apply transition-all hover:font-bold  hover:border-b-2 border-blue-100
+    }
+
+    
   }
-
-  /* <script type="text/javascript">
-  document.addEventListener("DOMContentLoaded, () => {
-    const toggleDark = document.getElementById('toggleDark")2
-    toggleDark.addEventListener('click', function() {
-      if (document.documentElement.classList.includes('dark') {
-        document.documentElement.classList.remove('dark')
-      } else {
-        document.documentElement.classList.add('dark')
-      })
-      alert("Click!")
-    })
-</script> */
-
-/* <!-- Dark Mode -->
-  <div class="card">
-    <h3 class="text-base font-medium tracking-tight text-slate-900 dark:text-white">This is a text element</h3>
-    <p class="mt-2 text-sm text-slate-500 dark:text-blue-500">This is an even longer p tag element</p>
-    <button 
-    id="toggleDark" 
-    class="text-blue-900 px-4 py-2 text-sm font-medium mt-8 bg-blue-100 rounded-md" 
-    onClick="document.body.classList.toggle(`dark`)">
-      Toggle Dark Mode
-    </button>
-  </div> */

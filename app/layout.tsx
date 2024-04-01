@@ -1,13 +1,11 @@
+"use client";
+
 import "../styles/globals.css";
-
 import Navbar from "../components/Navbar";
+import { AuthProvider } from "../components/AuthContext";
+import Footbar from "@/components/Footbar";
 
-export const metadata = {
-  title: "Welcome to Siwoo's",
-  description: "Siwoo's eCommerce site",
-};
-
-export default function RootLayout({
+function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -15,10 +13,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
-        <Navbar />
+        <AuthProvider>
+          <Navbar />
+          {children}
+          <Footbar />
+        </AuthProvider>
       </body>
     </html>
   );
 }
+
+export default RootLayout;

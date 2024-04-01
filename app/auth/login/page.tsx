@@ -2,215 +2,121 @@
 
 import "@/styles/globals.css";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, {
+  FormEvent,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
+import Form from "@/components/Form";
+import AuthContext from "@/components/AuthContext";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
-interface UserInfo {
-  email: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-  phone?: string;
-  address?: string;
-}
-
 export default function Page() {
+  console.log("======Auth/Login Starts=====");
+  const router = useRouter();
+  const { accessToken, onLogIn, isLoggedIn } = useContext(AuthContext);
   const [isMember, setIsMember] = useState(true);
   const toggleMember = () => setIsMember((prev) => !prev);
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  let userInfo = useRef({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    address: "",
+  });
 
-  const userInfo: UserInfo = {
-    email,
-    password,
-    firstName,
-    lastName,
-    phone,
-    address,
-  };
+  const [submitting, setSubmitting] = useState(false);
+  const authURI: any = process.env.NEXT_PUBLIC_SIGNUP;
 
-  const authURI: any = isMember
-    ? process.env.NEXT_PUBLIC_LOGIN
-    : process.env.NEXT_PUBLIC_SIGNUP;
+  useEffect(() => {
+    console.log("AuthLogin UseEffect invoked...");
+    console.log(accessToken);
+    if (isLoggedIn) {
+      console.log("Rerouting from Auth/Login to /");
+      router.replace("/");
+      return;
+    }
+  }, [isLoggedIn]);
 
-  const handleSubmit = async (e: any) => {
+  console.log("Page tsx");
+  console.log(accessToken);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    console.log("=====HandleSubmit Starts=====");
+    console.log(userInfo);
     e.preventDefault();
-    setIsLoading(true);
+    setSubmitting(true);
+
+    console.log("Submitting...");
+    console.log(submitting);
+    console.log("submitted!");
 
     try {
-      const response = await fetch(authURI, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
-      });
-
-      if (!response.ok) {
-        throw new Error(isMember ? "Log-in failed" : "Sign-Up failed");
-      }
-
-      const msg = await response.json();
-      const parsedMsg = JSON.parse(msg.body);
-
-      if (parsedMsg.errorMsg) {
-        alert(parsedMsg.errorMsg);
-        throw new Error(parsedMsg.errorMsg);
-      }
-
       if (isMember) {
-        router.push("/");
+        console.log("Trigerring onLogIn");
+        await onLogIn(userInfo.current.email, userInfo.current.password);
+        console.log("Awaiting onLogIn finished");
       } else {
+        let firstName = userInfo.current.firstName.toLowerCase();
+        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+        let lastName = userInfo.current.lastName.toLowerCase();
+        lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+
+        await axios.post(
+          authURI,
+          {
+            email: userInfo.current.email,
+            password: userInfo.current.password,
+            firstName: firstName,
+            lastName: lastName,
+            phone: userInfo.current.phone,
+            address: userInfo.current.address,
+          },
+          {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        alert("Sign-Up Done!");
+        console.log("Reloading");
         window.location.reload();
       }
-    } catch (e) {
-      console.log("Fetch error:", e);
+    } catch (err: any) {
+      console.log("Fetch error:", err.message);
+      alert(err.response.data.body.message);
+    } finally {
+      console.log("Finally...setsubmitting false");
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className="flex flex-row gap-3 p-5 justify-center h-lvh items-center">
-      <div className="basis-1/2 h-full relative">
-        <Image
-          src="/assets/images/login.jpg"
-          alt="login_img"
-          fill={true}
-          className="srhink p-10 object-scale-down"
-        ></Image>
-      </div>
-
-      <div className="flex flex-col gap-3 basis-1/3 p-10">
-        <h1 className="text-xl font-mono font-bold text-center">
-          {isMember
-            ? "Siwoo's Membership Login"
-            : "Join Siwoo's Membership Today"}
-        </h1>
-        <div className="flex gap-2 text-md justify-center">
-          <div>{isMember ? "Not a member?" : "Already have account?"}</div>
-          <button
-            onClick={toggleMember}
-            className="font-bold underline underline-offset-4"
-          >
-            {isMember ? "Sign Up" : "Log In"}
-          </button>
-        </div>
-        <form onSubmit={handleSubmit} noValidate className="group">
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col">
-              <input
-                required
-                type="email"
-                placeholder="Email"
-                value={email}
-                className="border-b border-y-neutral-400 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
-                pattern="^[a-z]+[\.]*[a-z0-9]+@[a-z]+\.[a-z]{2,}$"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <span className="hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                Please enter a valid email address
-              </span>
-            </div>
-            <div className="flex flex-col">
-              <input
-                required
-                type="password"
-                placeholder="Password"
-                value={password}
-                className="border-b border-y-neutral-400 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
-                pattern=".{7,12}"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <span className="hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                You password must be between 7 and 12 characters long
-              </span>
-            </div>
-
-            {!isMember && (
-              <div className="flex flex-col">
-                <input
-                  required
-                  type="text"
-                  placeholder="First Name"
-                  value={firstName}
-                  className="border-b border-y-neutral-400 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
-                  pattern="^[a-zA-Z]+$"
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-                <span className="hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                  Please enter a valid name
-                </span>
-              </div>
-            )}
-            {!isMember && (
-              <div className="flex flex-col">
-                <input
-                  required
-                  type="text"
-                  placeholder="Last Name"
-                  value={lastName}
-                  className="border-b border-y-neutral-400 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
-                  pattern="[a-zA-Z]+$"
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-                <span className="hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                  Please enter a valid name
-                </span>
-              </div>
-            )}
-            {!isMember && (
-              <div className="flex flex-col">
-                <input
-                  required
-                  type="text"
-                  placeholder="Phone"
-                  value={phone}
-                  className="border-b border-y-neutral-400 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
-                  pattern="[0-9]+$"
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-                <span className="hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                  Please enter valid numbers
-                </span>
-              </div>
-            )}
-            {!isMember && (
-              <div className="flex flex-col">
-                <input
-                  required
-                  type="text"
-                  placeholder="Address"
-                  value={address}
-                  className="border-b border-y-neutral-400 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
-                  pattern="[a-zA-Z0-9]+$"
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-                <span className="hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                  Please enter a valid address
-                </span>
-              </div>
-            )}
-            <div className="flex flex-row">
-              {isMember ? (
-                <button className="btn_auth basis-full" type="submit">
-                  Log In
-                </button>
-              ) : (
-                <div className="flex flex-row basis-full gap-5 items-center">
-                  <button className="btn_auth basis-1/2" type="submit">
-                    Sign Up
-                  </button>
-                  <div className="basis-1/2 text-right">Forgot Password?</div>
-                </div>
-              )}
-            </div>
+    <div className="w-full flex flex-row gap-3 justify-center items-center -z-10 mt-3  max-sm:items-start max-sm:p-3 ">
+      <div className="flex relative rounded-lg shadow-xl ml-4 mr-4 p-3 justify-center items-center h-3/4 max-sm:h-full">
+        <div className="flex relative gap-3 h-full max-sm:flex-col max-sm:h-full">
+          <div className="flex max-sm:h-52 max-sm:justify-center">
+            <Image
+              src="/assets/images/login.jpg"
+              alt="login_img"
+              width={300}
+              height={50}
+              className="max-sm:w-full object-cover rounded-md"
+            ></Image>
           </div>
-        </form>
+          <div className="flex items-center p-2 justify-center max-sm:h-full max-sm:justify-center max-sm:items-start ">
+            <Form
+              isMember={isMember}
+              handleSubmit={handleSubmit}
+              userInfo={userInfo}
+              submitting={submitting}
+              toggleMember={toggleMember}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
