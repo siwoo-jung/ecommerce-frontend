@@ -183,10 +183,14 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
     console.log("======OnSilentRefersh Starts=======");
     try {
       const authURI: any = process.env.NEXT_PUBLIC_REFRESH;
-      const response = await axios.post(authURI, {
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.post(
+        authURI,
+        {},
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       console.log("OnSilentRefresh Successful");
       onLoginSuccess(response);
