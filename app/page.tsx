@@ -7,11 +7,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ProductInfoType, ProductReviewType } from "@/types/Type";
 import { NEW_ARRIVALS, CATEGORIES, TRENDING } from "@/constants";
+import AuthContext from "@/components/AuthContext";
+import { useContext } from "react";
 
 export default function Home() {
   const initialInfo: (ProductInfoType & ProductReviewType)[] = [];
   const [trendingInfo, setTrendingInfo] = useState(initialInfo);
   const [newArrivalsInfo, setNewArrivalsInfo] = useState(initialInfo);
+  const { user } = useContext(AuthContext);
 
   const fetchTrendingData = async (product: string) => {
     const tempURI: any = process.env.NEXT_PUBLIC_GET_PRODUCTS;
@@ -40,7 +43,7 @@ export default function Home() {
     NEW_ARRIVALS.map((product, index) => {
       fetchNewArrivalsgData(product);
     });
-  }, []);
+  }, [user]);
 
   return (
     <main>
