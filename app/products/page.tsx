@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const initialProdInfo: (ProductInfoType & ProductReviewType)[] = [];
 
@@ -62,4 +62,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

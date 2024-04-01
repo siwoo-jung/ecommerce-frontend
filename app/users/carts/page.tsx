@@ -59,7 +59,7 @@ export default function Page() {
 
         {isLoggedIn &&
           Object.keys(cartInfo).map((prodId, index) => (
-            <div className="flex flex-row rounded-xl shadow-lg p-1 border">
+            <div className="flex flex-row rounded-xl shadow-lg p-1 border" key={index}>
               <div
                 key={index}
                 className="flex flex-row items-center gap-3 w-1/2 justify-between px-1"

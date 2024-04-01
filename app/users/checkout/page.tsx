@@ -7,7 +7,7 @@ import { FormEvent } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const { cartInfo, isLoggedIn, checkoutCart } = useContext(AuthContext);
   const [grandTotal, setGrandTotal] = useState(0);
   const router = useRouter();
@@ -155,4 +155,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
