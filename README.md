@@ -6,7 +6,7 @@ https://www.siwoo-ecommerce.com/
 
 ## AWS Architecture
 
-<img src="./misc/aws-architecture.png" width="400">
+<img src="./misc/aws-architecture.png" width="1000">
 
 ## Features
 
