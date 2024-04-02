@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AWS-powered Full-Stack E-Commerce with Microservices & Serverless Backend
 
-## Getting Started
+## Demo
 
-First, run the development server:
+https://www.siwoo-ecommerce.com/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## AWS Architecture
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<img src="./misc/aws-architecture.png" width="400">
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Scalable and serverless microservices backend architecture with [AWS Lambda](https://aws.amazon.com/lambda/)
+- CI/CD and automated deployment via [AWS CodeBuild](https://aws.amazon.com/codebuild/) and [AWS Amplify](https://aws.amazon.com/amplify/)
+- Containerization of each AWS Lambda microservice with Docker and image hosting by [Amazon ECR](https://aws.amazon.com/amplify/)
+- RESTful CRUD Operations via [Amazon API Gateway](https://aws.amazon.com/api-gateway/)
+- Database management via [Amazon DynamoDB](https://aws.amazon.com/dynamodb/)
+- Frontend Performance with Next.js
+- Flexible Styling with Tailwind CSS
 
-## Learn More
+## Repo
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend (mono-repo)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- https://github.com/siwoo-jung/ecommerce-frontend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Backend (poly-repo)
 
-## Deploy on Vercel
+#### Microservices #1 - Auth
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- https://github.com/siwoo-jung/ecommerce-microservice-auth
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### Microservices #2 - Users
+
+- https://github.com/siwoo-jung/ecommerce-microservice-users
+
+#### Microservices #3 - Carts
+
+- https://github.com/siwoo-jung/ecommerce-microservice-carts
+
+#### Microservices #4 - Products
+
+- https://github.com/siwoo-jung/ecommerce-microservice-products
+
+#### Microservices #5 - Orders
+
+- https://github.com/siwoo-jung/ecommerce-microservice-orders
+
+#### Microservices #6 - Reviews
+
+- https://github.com/siwoo-jung/ecommerce-microservice-reviews

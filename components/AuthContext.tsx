@@ -87,9 +87,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("=======Refreshing UseEffect Invoked=====");
-    console.log(new Date());
-    console.log(accessToken);
     onSilentRefresh();
   }, []);
 
@@ -97,13 +94,11 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
     email: string | null,
     password: string | null
   ): Promise<void | Error> => {
-    console.log("--=======OnLogIn Starst=======");
     if (!email || !password) {
       return new Error("Invalid email or password");
     }
     try {
       const authURI: any = process.env.NEXT_PUBLIC_LOGIN;
-      console.log("Sending data for log in");
       const response = await axios.post(
         authURI,
         {
@@ -115,7 +110,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log("OnLogIn Successful");
       await onLoginSuccess(response);
     } catch (err: any) {
       throw err;
@@ -123,41 +117,23 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
   };
 
   const onLoginSuccess = async (response: any) => {
-    console.log("======OnLoginSuccess Starts=======");
-    console.log(response);
     setAccessToken(response.data.body.accessToken);
     const accessToken = response.data.body.accessToken;
-    console.log(accessToken);
-    console.log("changed");
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-    console.log("Header Authorization Set");
-
     const cartInfoResponse = await getCartInfo(response.data.body.user.email);
-    console.log("cartInfoResponse is : ", cartInfoResponse);
     setCartInfo(cartInfoResponse.data.body);
 
     const refreshTimeString: any = process.env.NEXT_PUBLIC_JWT_EXPIRY_TIME;
     const refreshTimeNumber: number = parseInt(refreshTimeString!);
-    console.log("OnLoginSuccess Successful");
-    console.log(new Date());
-    console.log(response);
-    console.log("Setting user and isLoggedIn....");
     setUser(response.data.body.user);
     setIsLoggedIn(true);
-    console.log("is Loged In? : ", isLoggedIn);
-    console.log("========");
-    console.log(user);
-    console.log("========");
 
     setTimeout(() => {
-      console.log("Set time out invoked");
       onSilentRefresh();
     }, refreshTimeNumber);
   };
 
   const getCartInfo = async (email: string) => {
-    console.log("======getCartInfo Starts=======");
-    console.log(email);
     try {
       const authURI: any = process.env.NEXT_PUBLIC_GET_CARTS;
       const response = await axios.post(
@@ -170,8 +146,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
           headers: { "Content-Type": "application/json" },
         }
       );
-
-      console.log("getCartInfo Successful");
       return response;
     } catch (err: any) {
       console.log(err);
@@ -180,7 +154,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
   };
 
   const onSilentRefresh = async () => {
-    console.log("======OnSilentRefersh Starts=======");
     try {
       const authURI: any = process.env.NEXT_PUBLIC_REFRESH;
       const response = await axios.post(
@@ -191,8 +164,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
           headers: { "Content-Type": "application/json" },
         }
       );
-
-      console.log("OnSilentRefresh Successful");
       onLoginSuccess(response);
     } catch (err: any) {
       console.log(err);
@@ -200,20 +171,14 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
   };
 
   const logout = async () => {
-    console.log("=====LotOut Starts=====");
-
     try {
       const authURI: any = process.env.NEXT_PUBLIC_LOGOUT;
       const response = await axios.get(authURI, {
         withCredentials: true,
         headers: { "Content-Type": "application/json" },
       });
-      console.log(response);
+
       setAccessToken(null);
-      console.log("Log Out Successful");
-      console.log("Pushing to /");
-      router.push("/");
-      console.log("Refreshing");
       setIsLoggedIn(false);
       router.push("/");
     } catch (err: any) {
@@ -223,15 +188,12 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
   };
 
   const updateUser = async (userInfo: UserToUpdate) => {
-    console.log("========User Update Start========");
     try {
       const authURI: any = process.env.NEXT_PUBLIC_USERUPDATE;
       const response = await axios.post(authURI, userInfo, {
         withCredentials: true,
         headers: { "Content-Type": "application/json" },
       });
-      console.log(response);
-      console.log("Update Successful");
     } catch (err: any) {
       console.log(err);
       throw err;
@@ -243,7 +205,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
     currentQuantity: number
   ) => {
     try {
-      console.log("Invoking Cart Update");
       const authURI: any = process.env.NEXT_PUBLIC_UPDATE_CARTS;
       const response = await axios.post(
         authURI,
@@ -253,7 +214,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log("Update Successful");
       setCartInfo(response.data.body.carts);
     } catch (e) {
       throw e;
@@ -262,7 +222,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
 
   const saveCart = async (cartInfo: cartsType) => {
     try {
-      console.log("Invoking Save Cart");
       const authURI: any = process.env.NEXT_PUBLIC_SAVE_CARTS;
       const response = await axios.post(
         authURI,
@@ -272,7 +231,6 @@ export const AuthProvider: React.FC<AuthcontextProps> = ({ children }) => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log("Save Successful");
       setCartInfo(response.data.body.carts);
     } catch (e) {
       throw e;

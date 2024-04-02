@@ -47,7 +47,6 @@ export default function Page() {
       alert("Updated Successfully!");
       window.location.reload();
     } catch (err: any) {
-      console.log("Update Failed");
       let errMsg = err.response.data.message;
       if (err.response.data.body) {
         errMsg = err.response.data.body.message;

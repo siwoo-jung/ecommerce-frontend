@@ -39,7 +39,6 @@ const Page = () => {
   const [userInfo, setUserInfo] = useState(initialUserInfo);
 
   async function fetchData() {
-    console.log("email is...", user.email);
     const prodURI: any = process.env.NEXT_PUBLIC_LOGIN + `?email=${user.email}`;
     return await axios.get(prodURI, {
       withCredentials: true,
@@ -50,9 +49,7 @@ const Page = () => {
   useEffect(() => {
     const getProductData = async () => {
       const response = await fetchData();
-      console.log("response is...", response);
       setUserInfo(response.data.body.Item);
-      console.log("userInfo is...", userInfo);
     };
     getProductData();
   }, [user]);

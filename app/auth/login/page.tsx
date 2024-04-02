@@ -15,7 +15,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
-  console.log("======Auth/Login Starts=====");
   const router = useRouter();
   const { accessToken, onLogIn, isLoggedIn } = useContext(AuthContext);
   const [isMember, setIsMember] = useState(true);
@@ -33,33 +32,19 @@ export default function Page() {
   const authURI: any = process.env.NEXT_PUBLIC_SIGNUP;
 
   useEffect(() => {
-    console.log("AuthLogin UseEffect invoked...");
-    console.log(accessToken);
     if (isLoggedIn) {
-      console.log("Rerouting from Auth/Login to /");
       router.replace("/");
       return;
     }
   }, [isLoggedIn]);
 
-  console.log("Page tsx");
-  console.log(accessToken);
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log("=====HandleSubmit Starts=====");
-    console.log(userInfo);
     e.preventDefault();
     setSubmitting(true);
 
-    console.log("Submitting...");
-    console.log(submitting);
-    console.log("submitted!");
-
     try {
       if (isMember) {
-        console.log("Trigerring onLogIn");
         await onLogIn(userInfo.current.email, userInfo.current.password);
-        console.log("Awaiting onLogIn finished");
       } else {
         let firstName = userInfo.current.firstName.toLowerCase();
         firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
@@ -82,14 +67,12 @@ export default function Page() {
           }
         );
         alert("Sign-Up Done!");
-        console.log("Reloading");
         window.location.reload();
       }
     } catch (err: any) {
       console.log("Fetch error:", err.message);
       alert(err.response.data.body.message);
     } finally {
-      console.log("Finally...setsubmitting false");
       setSubmitting(false);
     }
   };

@@ -12,7 +12,6 @@ export default function Page() {
   const [grandTotal, setGrandTotal] = useState(0);
 
   const handleQuantityChange = (prodId: string, newQuantity: number) => {
-    console.log(prodId, newQuantity);
     cartInfo[prodId].quantity = newQuantity;
     cartInfo[prodId].subtotal = parseFloat(
       (newQuantity * cartInfo[prodId].unitPrice).toFixed(2)
@@ -26,7 +25,6 @@ export default function Page() {
 
   const handleSaveCartSubmit = async () => {
     try {
-      console.log("deducting quantities...");
       setIsSaveCartSubmiting(true);
       await saveCart(cartInfo);
     } catch (e) {
@@ -59,7 +57,10 @@ export default function Page() {
 
         {isLoggedIn &&
           Object.keys(cartInfo).map((prodId, index) => (
-            <div className="flex flex-row rounded-xl shadow-lg p-1 border" key={index}>
+            <div
+              className="flex flex-row rounded-xl shadow-lg p-1 border"
+              key={index}
+            >
               <div
                 key={index}
                 className="flex flex-row items-center gap-3 w-1/2 justify-between px-1"

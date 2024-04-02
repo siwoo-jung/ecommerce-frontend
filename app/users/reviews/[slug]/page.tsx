@@ -79,11 +79,6 @@ export default function Page({ params }: any) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(rating);
-    console.log(title);
-    console.log(description);
-    console.log(user.email);
-    console.log(brandModelString);
 
     try {
       setIsSubmitting(true);

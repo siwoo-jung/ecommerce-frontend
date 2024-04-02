@@ -27,11 +27,7 @@ const Page = () => {
   }, [cartInfo]);
 
   const getOrders = async () => {
-    console.log("AccessToken is...", accessToken);
     try {
-      console.log("AccessToken is...", accessToken);
-      console.log(user.email);
-      console.log("Invoking getOrders....");
       const authURI: any = process.env.NEXT_PUBLIC_ORDERS;
       const response = await axios.post(
         authURI,

@@ -23,20 +23,19 @@ const Page = () => {
     e.preventDefault();
 
     const authURI: any = process.env.NEXT_PUBLIC_CHECKOUT;
-    console.log("Sending POST request...");
+
     try {
       setIsSubmitting(true);
       await checkoutCart(grandTotal);
-      setIsSubmitting(false);
       setTimeout(() => {
+        setIsSubmitting(false);
         router.push("/users/orders");
-      }, 3000);
+      }, 2000);
     } catch (e) {
       console.log(e);
     }
   };
 
-  console.log("grand total", grandTotal);
   return (
     <div className="flex flex-col shadow-2xl p-8 rounded-l items-center gap-4 min-sm:min-w-[600px]">
       <div className="flex w-full text-xl font-bold">Order Summary</div>

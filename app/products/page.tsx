@@ -14,17 +14,14 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Invoking fetchData....");
         const productsURI: any = process.env.NEXT_PUBLIC_GET_PRODUCTS;
         const response = await axios.get(productsURI, {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
         });
-        console.log("collections response is", response);
         setProdInfo(response.data.body.products);
         router.refresh();
       } catch (e) {
-        console.log("Error here");
         console.log(e);
       }
     };

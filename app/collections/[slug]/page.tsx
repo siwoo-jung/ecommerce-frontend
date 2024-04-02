@@ -18,18 +18,15 @@ export default function Page({ params }: any) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Invoking collections....");
         const collectionsURI: any = process.env.NEXT_PUBLIC_COLLECTIONS + slug;
         const response = await axios.get(collectionsURI, {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
         });
-        console.log("collections response is", response);
         setProdInfo(response.data.body.products);
         setNumProd(response.data.body.count);
         router.refresh();
       } catch (e) {
-        console.log("Error here");
         console.log(e);
       }
     };
