@@ -28,7 +28,9 @@ const Page = () => {
       setIsSubmitting(true);
       await checkoutCart(grandTotal);
       setIsSubmitting(false);
-      router.push("/users/orders");
+      setTimeout(() => {
+        router.push("/users/orders");
+      }, 3000);
     } catch (e) {
       console.log(e);
     }
