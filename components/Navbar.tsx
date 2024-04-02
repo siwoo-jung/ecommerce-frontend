@@ -16,7 +16,7 @@ const Navbar = () => {
   const [toggleUserDropdown, setToggleUserDropdown] = useState(false);
   const [toggleCartDropdown, setToggleCartDropdown] = useState(false);
 
-  const { isLoggedIn, cartInfo, accessToken } = useContext(AuthContext);
+  const { isLoggedIn, cartInfo, accessToken, logout } = useContext(AuthContext);
 
   const router = useRouter();
 
@@ -135,6 +135,16 @@ const Navbar = () => {
                         {link.label}
                       </Link>
                     ))}
+                {accessToken && (
+                  <Link
+                    href={"/"}
+                    key={"logout"}
+                    className="regular-16 text-black flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold text-sm"
+                    onClick={() => logout()}
+                  >
+                    Logout
+                  </Link>
+                )}
               </div>
             )}
           </div>

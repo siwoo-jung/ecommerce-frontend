@@ -31,7 +31,6 @@ export const MOBILE_LOGIN_LINKS = [
   { href: "/about", key: "about", label: "About" },
   { href: "/users/", key: "myaccount", label: "My Account" },
   { href: "/users/carts", key: "carts", label: "Carts" },
-  { href: "/", key: "logout", label: "Log Out" },
 ];
 
 export const MOBILE_LOGOUT_LINKS = [
