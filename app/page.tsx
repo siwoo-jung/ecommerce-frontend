@@ -37,6 +37,8 @@ export default function Home() {
   };
 
   useEffect(() => {
+    setTrendingInfo(initialInfo);
+    setNewArrivalsInfo(initialInfo);
     TRENDING.map((product, index) => {
       fetchTrendingData(product);
     });
