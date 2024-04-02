@@ -142,7 +142,6 @@ export const NEW_ARRIVALS = [
   "apple-ipad-pro-11-inch-space-grey-128gb-wifi",
   "lenovo-legion-pro-5i-16-gen9-windows-11-pro-64-32gb-memory-512gb-ssd-rtx-4070",
   "sony-ps5-playstation-5-slim-disc",
-  "dell-inspiron-16-laptop-i7-1tb",
 ];
 
 export const initialProdInfo: ProductInfoType & ProductReviewType = {

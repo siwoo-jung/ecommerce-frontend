@@ -36,14 +36,14 @@ export default function Home() {
     setNewArrivalsInfo((prev) => [...prev, response.data.body]);
   };
 
-  // useEffect(() => {
-  //   TRENDING.map((product, index) => {
-  //     fetchTrendingData(product);
-  //   });
-  //   NEW_ARRIVALS.map((product, index) => {
-  //     fetchNewArrivalsgData(product);
-  //   });
-  // }, [user]);
+  useEffect(() => {
+    TRENDING.map((product, index) => {
+      fetchTrendingData(product);
+    });
+    NEW_ARRIVALS.map((product, index) => {
+      fetchNewArrivalsgData(product);
+    });
+  }, [user]);
 
   return (
     <main>
