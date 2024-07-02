@@ -4,7 +4,7 @@
 
 https://www.siwoo-ecommerce.com/
 
-## Development Node & History
+## Development Note & History
 
 https://medium.com/@siwoo.jg/list/ecommerce-website-sideproject-028ed604f728
 
