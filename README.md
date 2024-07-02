@@ -4,6 +4,10 @@
 
 https://www.siwoo-ecommerce.com/
 
+## Development Node & History
+
+https://medium.com/@siwoo.jg/list/ecommerce-website-sideproject-028ed604f728
+
 ## AWS Architecture
 
 <img src="./misc/aws-architecture.png" width="1000">
